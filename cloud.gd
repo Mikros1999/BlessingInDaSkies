@@ -5,14 +5,16 @@ extends Node2D
 @export var sprites: Array[Texture2D]
 
 var speed: float
-var direction: int            # -1 = left, +1 = right
+var direction: int
 var state := 0
 var raining := false
-
 var has_entered := false
 
-@onready var sprite := $CrossSprite
+var cross_inside := false
+
+@onready var sprite := $CloudSprite
 @onready var rain_sprite := $RainSprite
+@onready var hit_area := $HitArea
 
 
 func _ready():
@@ -20,26 +22,44 @@ func _ready():
 	rain_sprite.visible = false
 	_apply_state()
 
+	hit_area.body_entered.connect(_on_body_entered)
+	hit_area.body_exited.connect(_on_body_exited)
+
 
 func _process(delta):
 	position.x += direction * speed * delta
 
 	var screen_width := get_viewport_rect().size.x
 
-	# PHASE 1 — entering screen (NO bouncing)
 	if not has_entered:
 		if position.x >= 0 and position.x <= screen_width:
 			has_entered = true
 		return
 
-	# PHASE 2 — bounce forever
 	if position.x <= 0:
 		direction = 1
 	elif position.x >= screen_width:
 		direction = -1
 
 
-func hit():
+func _on_body_entered(body):
+	if body.is_in_group("cross"):
+		cross_inside = true
+
+
+func _on_body_exited(body):
+	if body.is_in_group("cross"):
+		cross_inside = false
+
+
+func try_interact() -> bool:
+	if cross_inside:
+		_advance_state()
+		return true
+	return false
+
+
+func _advance_state():
 	if state < 3:
 		state += 1
 		_apply_state()
@@ -51,4 +71,4 @@ func hit():
 
 func _apply_state():
 	if sprites.size() > state:
-		sprite.texture = sprites[0]
+		sprite.texture = sprites[state]

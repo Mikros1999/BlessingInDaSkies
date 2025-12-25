@@ -9,7 +9,7 @@ size = Vector2(10, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4bls"]
 size = Vector2(34, 10)
 
-[node name="CrossBody" type="RigidBody2D"]
+[node name="CrossBody" type="RigidBody2D" groups=["cross"]]
 position = Vector2(0, 7)
 gravity_scale = 0.1
 script = ExtResource("1_nsgoa")
