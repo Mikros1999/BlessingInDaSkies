@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://dggbdab14qbq3"]
+
+[ext_resource type="Script" uid="uid://dnrgb4shm615u" path="res://cloud.gd" id="1_4rphk"]
+[ext_resource type="Texture2D" uid="uid://dsquv7rcon01n" path="res://Sprites/cloud1.png" id="2_qaedo"]
+[ext_resource type="Texture2D" uid="uid://ctva4aglufi4y" path="res://Sprites/cloud3.png" id="3_sytix"]
+[ext_resource type="Texture2D" uid="uid://b8orn1n3qkgcy" path="res://Sprites/cloud4.png" id="5_rmn2t"]
+[ext_resource type="Texture2D" uid="uid://bwfkqklgy3uoi" path="res://Sprites/cloud5.png" id="6_npi7w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rq1uo"]
+radius = 25.0
+height = 98.0
+
+[node name="Node2D" type="Node2D" groups=["cloud"]]
+position = Vector2(3, 7)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+gravity_scale = 0.0
+script = ExtResource("1_4rphk")
+sprites = Array[Texture2D]([ExtResource("2_qaedo"), ExtResource("3_sytix"), ExtResource("6_npi7w"), ExtResource("5_rmn2t")])
+
+[node name="CloudSprite" type="Sprite2D" parent="RigidBody2D"]
+z_index = -250
+scale = Vector2(0.3, 0.364)
+
+[node name="RainSprite" type="Sprite2D" parent="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rq1uo")

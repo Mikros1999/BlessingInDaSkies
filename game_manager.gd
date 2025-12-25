@@ -19,8 +19,9 @@ func _process(delta):
 func end_game():
 	var raining = 0
 	for c in get_tree().get_nodes_in_group("cloud"):
-		if c.raining:
-			raining += 1
+		continue
+		#if c.raining:
+			#raining += 1
 	
 	if raining > 3:
 		result_label.text = "YOU WIN — clouds with rain: %d" % raining

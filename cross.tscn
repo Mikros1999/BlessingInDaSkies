@@ -1,12 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://c382wual1ah3b"]
+[gd_scene load_steps=5 format=3 uid="uid://c382wual1ah3b"]
 
 [ext_resource type="Script" uid="uid://chsoyq0ld2i5j" path="res://cross.gd" id="1_nsgoa"]
+[ext_resource type="Texture2D" uid="uid://dcnn1lodbdgq" path="res://Sprites/cross.png" id="2_0rgjp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rgjp"]
+size = Vector2(10, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4bls"]
+size = Vector2(34, 10)
 
 [node name="CrossBody" type="RigidBody2D"]
+position = Vector2(0, 7)
+gravity_scale = 0.1
 script = ExtResource("1_nsgoa")
 
 [node name="CrossSprite" type="Sprite2D" parent="."]
+z_index = -100
+texture = ExtResource("2_0rgjp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0rgjp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_c4bls")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

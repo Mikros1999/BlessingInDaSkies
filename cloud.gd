@@ -1,36 +1,54 @@
 extends Node2D
 
-@export var speed: float = 80.0
+@export var speed_min := 60.0
+@export var speed_max := 140.0
 @export var sprites: Array[Texture2D]
-# sprites[0] -> cloud_state_0 ... sprites[3] -> cloud_state_3
 
+var speed: float
+var direction: int            # -1 = left, +1 = right
 var state := 0
 var raining := false
 
-@onready var sprite = $CloudSprite
-@onready var rain_sprite = $RainSprite
+var has_entered := false
+
+@onready var sprite := $CrossSprite
+@onready var rain_sprite := $RainSprite
+
 
 func _ready():
-	state = 0
-	raining = false
+	speed = randf_range(speed_min, speed_max)
 	rain_sprite.visible = false
-	sprite.texture = sprites[state]
+	_apply_state()
+
 
 func _process(delta):
-	position.x += speed * delta
-	
-	# bounce when reaching screen edges
-	var screen = get_viewport_rect()
-	if position.x > screen.size.x:
-		speed *= -1
-	elif position.x < 0:
-		speed *= -1
+	position.x += direction * speed * delta
+
+	var screen_width := get_viewport_rect().size.x
+
+	# PHASE 1 — entering screen (NO bouncing)
+	if not has_entered:
+		if position.x >= 0 and position.x <= screen_width:
+			has_entered = true
+		return
+
+	# PHASE 2 — bounce forever
+	if position.x <= 0:
+		direction = 1
+	elif position.x >= screen_width:
+		direction = -1
+
 
 func hit():
 	if state < 3:
 		state += 1
-		sprite.texture = sprites[state]
-	
+		_apply_state()
+
 	if state == 3 and not raining:
 		raining = true
 		rain_sprite.visible = true
+
+
+func _apply_state():
+	if sprites.size() > state:
+		sprite.texture = sprites[0]
