@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dggbdab14qbq3"]
+
+[ext_resource type="Script" uid="uid://dnrgb4shm615u" path="res://cloud.gd" id="1_4rphk"]
+
+[node name="Node2D" type="Node2D" groups=["cloud"]]
+script = ExtResource("1_4rphk")
+sprites = Array[Texture2D]([null])
+
+[node name="CloudSprite" type="Sprite2D" parent="."]
+
+[node name="RainSprite" type="Sprite2D" parent="."]
