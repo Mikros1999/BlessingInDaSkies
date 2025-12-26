@@ -1,10 +1,13 @@
 extends Node2D
 
 @export var land: NodePath
-@export var threshold_state_1 := 3
-@export var threshold_state_2 := 6
+@export var threshold_state_1 := 5
+@export var threshold_state_2 := 10
 
 @onready var land_node = get_node(land)
+
+@onready var cloud_spawner = $CloudSpawner
+@onready var imp_spawner = $ImpSpawner
 
 @onready var main_menu = $UI/MainMenu
 @onready var game_hud = $UI/GameHUD
@@ -13,13 +16,13 @@ extends Node2D
 @onready var timer_label = $UI/GameHUD/TimerLabel
 @onready var result_label = $UI/EndMenu/ResultLabel
 
-@onready var cloud_spawner = $CloudSpawner
-@onready var imp_spawner = $ImpSpawner
-
 @onready var intro_music = $Audio/IntroMusic
 @onready var game_music = $Audio/GameMusic
 @onready var win_end_music = $Audio/WinEndMusic
 @onready var fail_end_music = $Audio/FailEndMusic
+
+@onready var start_button = $UI/MainMenu/StartButton
+@onready var restart_button = $UI/EndMenu/RestartButton
 
 enum GameState {
 	MENU,
@@ -29,7 +32,7 @@ enum GameState {
 
 var game_state: GameState = GameState.MENU
 
-const GAME_TIME := 100.0
+const GAME_TIME := 90.0
 var time_left := GAME_TIME
 var game_over := false
 
@@ -52,6 +55,8 @@ func enter_menu():
 	if not intro_music.playing:
 		intro_music.play()
 
+	start_button.grab_focus()
+	
 	# Stop gameplay systems
 	_freeze_cross()
 	_stop_spawners()
@@ -95,6 +100,8 @@ func end_game(end_condition: bool):
 	else: 
 		_lose_game()
 
+	restart_button.grab_focus()
+	
 	# Stop gameplay systems and cleanup
 	_freeze_cross()
 	_stop_spawners()
@@ -125,7 +132,7 @@ func _process(delta):
 		return
 
 	time_left -= delta
-	timer_label.text = "Time: %.0f" % time_left
+	timer_label.text = "Time:   %.0f" % time_left
 
 	if time_left <= 0:
 		end_game(false)
@@ -164,25 +171,33 @@ func _clear_dynamic_entities():
 
 
 func _win_game():
-	end_menu.get_node("ResultLabel").text = "THE LAND IS BLESSED"
+	end_menu.get_node("ResultLabel").text = "THY   LAND   IS   BLESSED"
 	win_end_music.play()
 
 
 func _lose_game():
-	end_menu.get_node("ResultLabel").text = "THE LAND REMAINS DRY"
+	end_menu.get_node("ResultLabel").text = "LAND   REMAINS   DRY  :("
 	fail_end_music.play()
 
 
 func _input(event):
-	if not game_over:
+	# ignore all gameplay shortcuts while in main menu
+	if game_state == GameState.MENU:
 		return
 
-	if event.is_action_pressed("reset"):
-		_restart_game()
+	if event.is_action_pressed("restart_game"):
+		end_game(false)
+		start_game()
+		return
+
+	if event.is_action_pressed("go_to_menu"):
+		enter_menu()
+		return
 
 
 func _restart_game():
-	get_tree().reload_current_scene()
+	#get_tree().reload_current_scene()
+	start_game()
 
 
 func _quit_game() -> void:

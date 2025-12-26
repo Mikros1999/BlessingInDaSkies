@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3aaqu153eark"
-path="res://.godot/imported/tile003.png-e4d7267d3c9c1cdbf67e805c158d963e.ctex"
+uid="uid://ca0sw2ryif8j"
+path="res://.godot/imported/priest_icon.svg-01bf3466a4b7b25a2c3fbc071216e0e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Flying Demon 2D Pixel Art/tile003.png"
-dest_files=["res://.godot/imported/tile003.png-e4d7267d3c9c1cdbf67e805c158d963e.ctex"]
+source_file="res://Sprites/priest_icon.svg"
+dest_files=["res://.godot/imported/priest_icon.svg-01bf3466a4b7b25a2c3fbc071216e0e9.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

@@ -17,7 +17,7 @@ var has_entered := false
 var cross_inside := false
 
 @onready var sprite := $CloudSprite
-@onready var rain_sprite := $RainSprite
+@onready var anim_player := $RainAnimation
 @onready var hit_area := $HitArea
 
 @onready var max_state_sound = $Audio/MaxState
@@ -26,8 +26,9 @@ var cross_inside := false
 func _ready():
 	base_speed = randf_range(speed_min, speed_max)
 	_recalculate_speed()
-	rain_sprite.visible = false
 	_apply_state()
+	anim_player.visible = false
+
 
 	hit_area.body_entered.connect(_on_body_entered)
 	hit_area.body_exited.connect(_on_body_exited)
@@ -59,7 +60,6 @@ func _on_body_exited(body):
 		cross_inside = false
 
 
-# 👉 returns TRUE only if interaction was successful
 func try_interact() -> bool:
 	if not cross_inside:
 		return false
@@ -78,7 +78,8 @@ func _advance_state():
 
 	if state == 3:
 		raining = true
-		rain_sprite.visible = true
+		anim_player.visible = true
+		anim_player.play("rain")
 		max_state_sound.play()
 
 
@@ -100,3 +101,9 @@ func _apply_state():
 		return
 
 	sprite.texture = sprites[state]
+
+	
+func _exit_tree():
+	if anim_player and anim_player.is_playing():
+		anim_player.stop()
+		anim_player.visible = false

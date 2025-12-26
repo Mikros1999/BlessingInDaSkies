@@ -44,7 +44,7 @@ func spawn_cloud():
 		cloud.direction = -1
 
 	var y_min: float = 40.0
-	var y_max: float = screen.size.y * (2.0 / 3.0)
+	var y_max: float = screen.size.y * (1.0 / 2.0)
 	cloud.position.y = randf_range(y_min, y_max)
 
 	add_child(cloud)

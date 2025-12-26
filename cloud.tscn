@@ -1,27 +1,48 @@
-[gd_scene load_steps=9 format=3 uid="uid://dggbdab14qbq3"]
+[gd_scene load_steps=12 format=3 uid="uid://dggbdab14qbq3"]
 
 [ext_resource type="Script" uid="uid://dnrgb4shm615u" path="res://cloud.gd" id="1_4rphk"]
 [ext_resource type="Texture2D" uid="uid://nrkpgx1y4e32" path="res://Sprites/cloud_transparent.png" id="2_rq1uo"]
 [ext_resource type="Texture2D" uid="uid://dsquv7rcon01n" path="res://Sprites/cloud1.png" id="3_rmn2t"]
-[ext_resource type="Texture2D" uid="uid://ctva4aglufi4y" path="res://Sprites/cloud3.png" id="3_sytix"]
+[ext_resource type="Texture2D" uid="uid://bb12aydevtfnp" path="res://Sprites/c1.png" id="4_qy4vw"]
 [ext_resource type="Texture2D" uid="uid://b0xclyeus0wws" path="res://Sprites/cloud1_storm(1).png" id="4_rmn2t"]
 [ext_resource type="Texture2D" uid="uid://csk2ipjtflmuu" path="res://Sprites/cloud.png" id="6_rmn2t"]
+[ext_resource type="Texture2D" uid="uid://b8cyhalm8whe6" path="res://Sprites/cloud_transparent1.png" id="7_qy4vw"]
 [ext_resource type="AudioStream" uid="uid://owuq7e25fj2x" path="res://audio/water_drop.wav" id="7_rq1uo"]
+[ext_resource type="Texture2D" uid="uid://c45kqpfqa5hny" path="res://Sprites/rain2.png" id="9_wxnvt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3oxr"]
-radius = 125.0
-height = 636.0
+radius = 153.0
+height = 732.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2c7u8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_wxnvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qy4vw")
+}],
+"loop": true,
+"name": &"rain",
+"speed": 5.0
+}]
 
 [node name="Node2D" type="Node2D" groups=["cloud"]]
 z_index = -250
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_4rphk")
-sprites = Array[Texture2D]([ExtResource("2_rq1uo"), ExtResource("3_rmn2t"), ExtResource("4_rmn2t"), ExtResource("3_sytix")])
+sprites = Array[Texture2D]([ExtResource("2_rq1uo"), ExtResource("3_rmn2t"), ExtResource("4_qy4vw"), ExtResource("4_rmn2t")])
 
 [node name="CloudSprite" type="Sprite2D" parent="."]
 texture = ExtResource("6_rmn2t")
 
 [node name="RainSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = -550
+position = Vector2(-7.999997, 284)
+rotation = -3.1887167
+scale = Vector2(1.0674931, 1.137255)
 
 [node name="HitArea" type="Area2D" parent="."]
 
@@ -34,3 +55,12 @@ shape = SubResource("CapsuleShape2D_b3oxr")
 
 [node name="MaxState" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("7_rq1uo")
+
+[node name="RainAnimation" type="AnimatedSprite2D" parent="."]
+z_index = -500
+position = Vector2(27.999992, 232.00002)
+rotation = 0.03141593
+scale = Vector2(1.1255444, 1.0636308)
+sprite_frames = SubResource("SpriteFrames_2c7u8")
+animation = &"rain"
+frame_progress = 0.16527553

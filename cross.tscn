@@ -35,6 +35,8 @@ stream = ExtResource("3_yikw2")
 
 [node name="Success" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("3_c4bls")
+volume_db = 3.0
 
 [node name="Failure" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("4_vcsn8")
+volume_db = 3.0
