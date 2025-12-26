@@ -3,9 +3,13 @@ extends RigidBody2D
 @export var move_speed := 400.0
 @export var deadzone := 0.15
 
+var priest_node: Node = null
+
+
 var start_pos: Vector2
 
 var frozen := false
+var has_left_start := false
 
 
 func _ready():
@@ -22,10 +26,24 @@ func _physics_process(delta):
 	_rotate_with_right_stick()
 	_clamp_to_screen()
 
+	if not has_left_start and global_position.distance_to(start_pos) > 5.0:
+		has_left_start = true
+		_set_casting()
+
 	if Input.is_action_just_pressed("shoot"):
 		_try_cloud_interaction()
-		
-		
+
+
+func _set_casting():
+	if priest_node:
+		priest_node.set_casting()
+
+func _set_idle():
+	if priest_node:
+		priest_node.set_idle()
+
+
+
 func freeze():
 	frozen = true
 
@@ -62,6 +80,8 @@ func _try_cloud_interaction():
 func _reset_to_start():
 	global_position = start_pos
 	linear_velocity = Vector2.ZERO
+	has_left_start = false
+	_set_idle()
 
 
 func _clamp_to_screen():

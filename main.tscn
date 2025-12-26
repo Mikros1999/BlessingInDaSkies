@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://o1f7of3g6sug"]
+[gd_scene load_steps=13 format=3 uid="uid://o1f7of3g6sug"]
 
 [ext_resource type="Script" uid="uid://d140xfa1pxnki" path="res://game_manager.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://dipjbs5broelb" path="res://priest.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cau40mrokrh14" path="res://cloud_spawner.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c382wual1ah3b" path="res://cross.tscn" id="3_272bh"]
 [ext_resource type="Texture2D" uid="uid://c7amotlpb30eg" path="res://Sprites/priest1.png" id="4_272bh"]
+[ext_resource type="Texture2D" uid="uid://qt5ctck6r502" path="res://Sprites/priest1.1.png" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://dggbdab14qbq3" path="res://cloud.tscn" id="6_5vw27"]
 [ext_resource type="Texture2D" uid="uid://bmw4li8qdnfqf" path="res://Sprites/Background.png" id="7_5vw27"]
 [ext_resource type="Texture2D" uid="uid://bte5x3opqkidm" path="res://Sprites/sand-land.png" id="8_5vw27"]
@@ -22,8 +23,10 @@ position = Vector2(134, 468)
 scale = Vector2(1.1, 1.1)
 script = ExtResource("1_ig7tw")
 cross_scene = ExtResource("3_272bh")
+sprite_idle = ExtResource("4_272bh")
+sprite_casting = ExtResource("5_dg77c")
 
-[node name="Sprite2D" type="Sprite2D" parent="Priest"]
+[node name="PriestSprite" type="Sprite2D" parent="Priest"]
 position = Vector2(-10.056641, -9.796879)
 scale = Vector2(1.1708152, 1.1480207)
 texture = ExtResource("4_272bh")
