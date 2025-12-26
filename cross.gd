@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var move_speed := 400.0
 @export var deadzone := 0.15
+@export var spin_speed := 6.0   # radians per second
 
 @onready var swoosh_sound = $Audio/Swoosh
 @onready var success_sound = $Audio/Success
@@ -12,6 +13,7 @@ var priest_node: Node = null
 var frozen := false
 var has_left_start := false
 var stolen := false
+
 var attached_to: Node2D = null
 
 
@@ -33,8 +35,9 @@ func _physics_process(delta):
 		return
 
 	_move_with_left_stick()
-	_rotate_with_right_stick()
+	#_rotate_with_right_stick()
 
+	_apply_spin(delta)
 	move_and_slide()
 
 	_clamp_to_screen()
@@ -61,6 +64,7 @@ func _reset_to_start():
 		global_position = global_position  # fallback, should never happen
 	
 	velocity = Vector2.ZERO
+	rotation = 0.0
 	has_left_start = false
 	_set_idle()
 	
@@ -84,6 +88,7 @@ func freeze():
 
 func steal(by_node: Node2D):
 	stolen = true
+	rotation = 0.0
 	attached_to = by_node
 	velocity = Vector2.ZERO
 
@@ -99,6 +104,13 @@ func _move_with_left_stick():
 		return
 
 	velocity = move.normalized() * move_speed
+
+
+func _apply_spin(delta):
+	if not has_left_start:
+		return
+
+	rotation += spin_speed * delta
 
 
 func _rotate_with_right_stick():
