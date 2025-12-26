@@ -47,6 +47,12 @@ offset_top = 203.0
 offset_right = 835.0
 offset_bottom = 243.0
 
+[node name="ResetLabel" type="Label" parent="UI"]
+offset_left = 410.0
+offset_top = 358.0
+offset_right = 918.0
+offset_bottom = 410.0
+
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1000
 position = Vector2(638.99994, 359.50003)

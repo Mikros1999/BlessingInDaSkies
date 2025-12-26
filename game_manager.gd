@@ -7,6 +7,7 @@ extends Node2D
 @onready var land_node = get_node(land)
 @onready var timer_label = $UI/TimerLabel
 @onready var result_label = $UI/ResultLabel
+@onready var reset_label = $UI/ResetLabel
 @onready var cloud_spawner = $CloudSpawner
 
 
@@ -17,6 +18,20 @@ var game_over := false
 
 func _ready():
 	result_label.visible = false
+	reset_label.visible = false
+	result_label.text = "Press X (gamepad) or R (keyboard) to Restart"
+
+
+func _input(event):
+	if not game_over:
+		return
+
+	if event.is_action_pressed("reset"):
+		_restart_game()
+
+
+func _restart_game():
+	get_tree().reload_current_scene()
 
 
 func _process(delta):
@@ -65,6 +80,7 @@ func _win_game():
 	_freeze_cross()
 	result_label.text = "!!! YOU BLESSED ENOUGH RAINS IN AFRICA !!!"
 	result_label.visible = true
+	reset_label.visible = true
 	set_process(false)
 
 
@@ -73,4 +89,5 @@ func _lose_game():
 	_freeze_cross()
 	result_label.text = "YOU LOSE - BLESS FASTER NEXT TIME"
 	result_label.visible = true
+	reset_label.visible = true
 	set_process(false)
