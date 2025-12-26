@@ -4,10 +4,9 @@ extends Node2D
 @export var spawn_interval := 2.5
 @export var max_clouds := 6
 
-var active := true
+var active := false
 
 var timer := 0.0
-
 
 func _process(delta):
 	if not active:
@@ -17,9 +16,15 @@ func _process(delta):
 	if timer >= spawn_interval:
 		timer = 0.0
 		spawn_cloud()
+		
+func start():
+	active = true
 
-func set_active(value: bool):
-	active = value
+func stop():
+	active = false
+
+#func set_active(value: bool):
+	#active = value
 
 func spawn_cloud():
 	var clouds := get_tree().get_nodes_in_group("cloud")

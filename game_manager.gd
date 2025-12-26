@@ -14,11 +14,20 @@ extends Node2D
 @onready var result_label = $UI/EndMenu/ResultLabel
 
 @onready var cloud_spawner = $CloudSpawner
+@onready var imp_spawner = $ImpSpawner
 
 @onready var intro_music = $Audio/IntroMusic
 @onready var game_music = $Audio/GameMusic
-@onready var end_music = $Audio/EndMusic
+@onready var win_end_music = $Audio/WinEndMusic
+@onready var fail_end_music = $Audio/FailEndMusic
 
+enum GameState {
+	MENU,
+	PLAYING,
+	ENDED
+}
+
+var game_state: GameState = GameState.MENU
 
 const GAME_TIME := 100.0
 var time_left := GAME_TIME
@@ -26,51 +35,102 @@ var game_over := false
 
 
 func _ready():
-	_show_main_menu()
+	enter_menu()
 
-func _show_main_menu():
+func enter_menu():
+	game_state = GameState.MENU
+
+	# UI
 	main_menu.visible = true
 	game_hud.visible = false
 	end_menu.visible = false
-	game_over = true
+
+	# Audio
+	win_end_music.stop()
+	fail_end_music.stop()
+	game_music.stop()
+	if not intro_music.playing:
+		intro_music.play()
+
+	# Stop gameplay systems
+	_freeze_cross()
+	_stop_spawners()
+	_clear_dynamic_entities()
 
 
-func _start_game():
+func start_game():
+	game_state = GameState.PLAYING
+
+	# UI
 	main_menu.visible = false
 	game_hud.visible = true
 	end_menu.visible = false
-	game_over = false
 
-	# reset game state cleanly
+	# Reset game data
 	time_left = GAME_TIME
-	result_label.visible = false
+
+	# Audio
+	intro_music.stop()
+	win_end_music.stop()
+	fail_end_music.stop()
+	game_music.play()
+
+	# Enable gameplay
+	_unfreeze_cross()
+	_start_spawners()
 
 
-func _input(event):
-	if not game_over:
-		return
+func end_game(end_condition: bool):
+	game_state = GameState.ENDED
 
-	if event.is_action_pressed("reset"):
-		_restart_game()
+	# UI
+	main_menu.visible = false
+	game_hud.visible = false
+	end_menu.visible = true
+	# Audio
+	game_music.stop()
+	
+	if end_condition: 
+		_win_game() 
+	else: 
+		_lose_game()
+
+	# Stop gameplay systems and cleanup
+	_freeze_cross()
+	_stop_spawners()
+	_clear_dynamic_entities()
 
 
-func _restart_game():
-	get_tree().reload_current_scene()
+func _start_spawners():
+	cloud_spawner.start()
+	imp_spawner.start()
+
+func _stop_spawners():
+	cloud_spawner.stop()
+	imp_spawner.stop()
+
+func _freeze_cross():
+	var crosses = get_tree().get_nodes_in_group("cross")
+	if crosses.size() > 0:
+		crosses[0].set_enabled(false)
+
+func _unfreeze_cross():
+	var crosses = get_tree().get_nodes_in_group("cross")
+	if crosses.size() > 0:
+		crosses[0].set_enabled(true)
 
 
 func _process(delta):
-	if game_over:
+	if game_state != GameState.PLAYING:
 		return
 
-	# timer
 	time_left -= delta
 	timer_label.text = "Time: %.0f" % time_left
 
 	if time_left <= 0:
-		_lose_game()
+		end_game(false)
 		return
 
-	# game logic
 	var raining_count := _count_raining_clouds()
 	_update_land_state(raining_count)
 
@@ -86,33 +146,43 @@ func _count_raining_clouds() -> int:
 func _update_land_state(raining_count: int):
 	if raining_count >= threshold_state_2:
 		land_node.set_state(2)
-		_win_game()
+		end_game(true)
 	elif raining_count >= threshold_state_1:
 		land_node.set_state(1)
 	else:
 		land_node.set_state(0)
 
 
-func _freeze_cross():
-	var crosses = get_tree().get_nodes_in_group("cross")
-	if crosses.size() > 0:
-		crosses[0].freeze()
+func _clear_dynamic_entities():
+	for cloud in get_tree().get_nodes_in_group("cloud"):
+		if is_instance_valid(cloud):
+			cloud.queue_free()
+
+	for imp in get_tree().get_nodes_in_group("imp"):
+		if is_instance_valid(imp):
+			imp.queue_free()
 
 
 func _win_game():
-	game_over = true
-	end_menu.visible = true
-	game_hud.visible = false
-	main_menu.visible = false
 	end_menu.get_node("ResultLabel").text = "THE LAND IS BLESSED"
+	win_end_music.play()
 
 
 func _lose_game():
-	game_over = true
-	end_menu.visible = true
-	game_hud.visible = false
-	main_menu.visible = false
 	end_menu.get_node("ResultLabel").text = "THE LAND REMAINS DRY"
+	fail_end_music.play()
+
+
+func _input(event):
+	if not game_over:
+		return
+
+	if event.is_action_pressed("reset"):
+		_restart_game()
+
+
+func _restart_game():
+	get_tree().reload_current_scene()
 
 
 func _quit_game() -> void:
@@ -120,7 +190,7 @@ func _quit_game() -> void:
 
 
 func _on_start_button_pressed() -> void:
-	_start_game()
+	start_game()
 
 
 func _on_restart_button_pressed() -> void:
@@ -128,7 +198,7 @@ func _on_restart_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	_show_main_menu()
+	enter_menu()
 
 
 func _on_quit_button_pressed() -> void:

@@ -6,13 +6,22 @@ extends Node2D
 
 var timer := 0.0
 
+var active := false
 
 func _process(delta):
+	if not active:
+		return
+		
 	timer += delta
 	if timer >= spawn_interval:
 		timer = 0.0
 		spawn_imp()
 
+func start():
+	active = true
+
+func stop():
+	active = false
 
 func spawn_imp():
 	# limit active imps

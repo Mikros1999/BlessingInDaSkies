@@ -204,7 +204,10 @@ stream = ExtResource("15_yaehf")
 stream = ExtResource("16_074og")
 volume_db = -15.0
 
-[node name="EndMusic" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="WinEndMusic" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("17_cegan")
+
+[node name="FailEndMusic" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("17_cegan")
 
 [connection signal="pressed" from="UI/MainMenu/StartButton" to="." method="_on_start_button_pressed"]

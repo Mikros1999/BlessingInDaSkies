@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 var priest_node: Node = null
 
-var frozen := false
+var frozen := true
 var has_left_start := false
 var stolen := false
 
@@ -84,6 +84,10 @@ func _set_idle():
 
 func freeze():
 	frozen = true
+	
+	
+func set_enabled(value: bool):
+	frozen = not value
 
 
 func steal(by_node: Node2D):
