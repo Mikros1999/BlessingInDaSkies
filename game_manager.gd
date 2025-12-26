@@ -1,32 +1,68 @@
 extends Node2D
 
-const GAME_TIME := 10.0   # 2 minutes
-var time_left := GAME_TIME
+@export var land: NodePath
+@export var threshold_state_1 := 3
+@export var threshold_state_2 := 6
 
+@onready var land_node = get_node(land)
 @onready var timer_label = $UI/TimerLabel
 @onready var result_label = $UI/ResultLabel
+
+const GAME_TIME := 100.0
+var time_left := GAME_TIME
+var game_over := false
+
 
 func _ready():
 	result_label.visible = false
 
+
 func _process(delta):
+	if game_over:
+		return
+
+	# timer
 	time_left -= delta
 	timer_label.text = "Time: %.0f" % time_left
-	
-	if time_left <= 0:
-		end_game()
 
-func end_game():
-	var raining = 0
-	for c in get_tree().get_nodes_in_group("cloud"):
-		continue
-		#if c.raining:
-			#raining += 1
-	
-	if raining > 3:
-		result_label.text = "YOU WIN — clouds with rain: %d" % raining
+	if time_left <= 0:
+		_lose_game()
+		return
+
+	# game logic
+	var raining_count := _count_raining_clouds()
+	_update_land_state(raining_count)
+
+
+func _count_raining_clouds() -> int:
+	var count := 0
+	for cloud in get_tree().get_nodes_in_group("cloud"):
+		if cloud.raining:
+			count += 1
+	return count
+
+
+func _update_land_state(raining_count: int):
+	if raining_count >= threshold_state_2:
+		land_node.set_state(2)
+		_win_game()
+	elif raining_count >= threshold_state_1:
+		land_node.set_state(1)
 	else:
-		result_label.text = "YOU LOSE — clouds with rain: %d" % raining
-	
+		land_node.set_state(0)
+
+
+func _win_game():
+	game_over = true
+	result_label.text = "!!! YOU BLESSED ENOUGH RAINS IN AFRICA !!!"
 	result_label.visible = true
+	print("YOU WIN")
+	set_process(false)
+
+
+func _lose_game():
+	game_over = true
+	result_label.text = "YOU LOSE - BLESS FASTER NEXT TIME"
+	result_label.visible = true
+	print("YOU LOSE")
 	set_process(false)

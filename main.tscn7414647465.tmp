@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://o1f7of3g6sug"]
+[gd_scene load_steps=10 format=3 uid="uid://o1f7of3g6sug"]
 
 [ext_resource type="Script" uid="uid://d140xfa1pxnki" path="res://game_manager.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://dipjbs5broelb" path="res://priest.gd" id="1_ig7tw"]
@@ -9,12 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://bmw4li8qdnfqf" path="res://Sprites/Background.png" id="7_5vw27"]
 [ext_resource type="Texture2D" uid="uid://bte5x3opqkidm" path="res://Sprites/sand-land.png" id="8_5vw27"]
 [ext_resource type="Script" uid="uid://yiek3rgvon3x" path="res://land.gd" id="8_kek77"]
-[ext_resource type="Texture2D" uid="uid://kr6jkh0ot3ru" path="res://Sprites/mid-land.png" id="10_efxa6"]
-[ext_resource type="Texture2D" uid="uid://dodes7kevhjbm" path="res://Sprites/grass-land.png" id="11_dg77c"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h2yge")
-land = NodePath("Land")
+land = null
+threshold_state_1 = null
+threshold_state_2 = null
 
 [node name="Priest" type="Node2D" parent="."]
 z_index = 100
@@ -57,7 +57,6 @@ texture = ExtResource("7_5vw27")
 position = Vector2(640.375, 608)
 scale = Vector2(0.6680989, 0.6338798)
 script = ExtResource("8_kek77")
-sprites = Array[Texture2D]([ExtResource("8_5vw27"), ExtResource("10_efxa6"), ExtResource("11_dg77c")])
 
 [node name="LandSprite" type="Sprite2D" parent="Land"]
 z_index = -500
