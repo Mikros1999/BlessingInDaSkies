@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://o1f7of3g6sug"]
+[gd_scene load_steps=14 format=3 uid="uid://o1f7of3g6sug"]
 
 [ext_resource type="Script" uid="uid://d140xfa1pxnki" path="res://game_manager.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://dipjbs5broelb" path="res://priest.gd" id="1_ig7tw"]
@@ -12,8 +12,9 @@
 [ext_resource type="Script" uid="uid://yiek3rgvon3x" path="res://land.gd" id="8_kek77"]
 [ext_resource type="Texture2D" uid="uid://kr6jkh0ot3ru" path="res://Sprites/mid-land.png" id="10_efxa6"]
 [ext_resource type="Texture2D" uid="uid://dodes7kevhjbm" path="res://Sprites/grass-land.png" id="11_dg77c"]
+[ext_resource type="AudioStream" uid="uid://f6fmfm3mju3q" path="res://audio/game_main.ogg" id="13_ycdy4"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Main" type="Node2D"]
 script = ExtResource("1_h2yge")
 land = NodePath("Land")
 
@@ -72,3 +73,8 @@ sprites = Array[Texture2D]([ExtResource("8_5vw27"), ExtResource("10_efxa6"), Ext
 z_index = -500
 scale = Vector2(1.0000001, 1)
 texture = ExtResource("8_5vw27")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="GameMusic" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("13_ycdy4")

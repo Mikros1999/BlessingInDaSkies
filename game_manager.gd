@@ -9,6 +9,7 @@ extends Node2D
 @onready var result_label = $UI/ResultLabel
 @onready var reset_label = $UI/ResetLabel
 @onready var cloud_spawner = $CloudSpawner
+@onready var game_music = $Audio/GameMusic
 
 
 const GAME_TIME := 10.0
@@ -20,6 +21,7 @@ func _ready():
 	result_label.visible = false
 	reset_label.visible = false
 	result_label.text = "Press X (gamepad) or R (keyboard) to Restart"
+	game_music.play()
 
 
 func _input(event):
@@ -82,6 +84,7 @@ func _win_game():
 	result_label.visible = true
 	reset_label.visible = true
 	set_process(false)
+	game_music.stop()
 
 
 func _lose_game():
@@ -91,3 +94,4 @@ func _lose_game():
 	result_label.visible = true
 	reset_label.visible = true
 	set_process(false)
+	game_music.stop()

@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c382wual1ah3b"]
+[gd_scene load_steps=8 format=3 uid="uid://c382wual1ah3b"]
 
 [ext_resource type="Script" uid="uid://chsoyq0ld2i5j" path="res://cross.gd" id="1_nsgoa"]
 [ext_resource type="Texture2D" uid="uid://dcnn1lodbdgq" path="res://Sprites/cross.png" id="2_0rgjp"]
+[ext_resource type="AudioStream" uid="uid://cjjhr4af0uuic" path="res://audio/success.wav" id="3_c4bls"]
+[ext_resource type="AudioStream" uid="uid://bofufgfv5tn20" path="res://audio/swoosh.wav" id="3_yikw2"]
+[ext_resource type="AudioStream" uid="uid://jghe2irwniqw" path="res://audio/failed_interact.mp3" id="4_vcsn8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rgjp"]
 size = Vector2(10, 46)
@@ -24,5 +27,16 @@ shape = SubResource("RectangleShape2D_0rgjp")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_c4bls")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Swoosh" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("3_yikw2")
+
+[node name="Success" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("3_c4bls")
+
+[node name="Failure" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("4_vcsn8")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

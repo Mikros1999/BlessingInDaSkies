@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dggbdab14qbq3"]
+[gd_scene load_steps=9 format=3 uid="uid://dggbdab14qbq3"]
 
 [ext_resource type="Script" uid="uid://dnrgb4shm615u" path="res://cloud.gd" id="1_4rphk"]
 [ext_resource type="Texture2D" uid="uid://dt3peo3pngy3s" path="res://Sprites/cloud2.png" id="2_rmn2t"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b8orn1n3qkgcy" path="res://Sprites/cloud4.png" id="5_rmn2t"]
 [ext_resource type="Texture2D" uid="uid://bwfkqklgy3uoi" path="res://Sprites/cloud5.png" id="6_npi7w"]
 [ext_resource type="Texture2D" uid="uid://csk2ipjtflmuu" path="res://Sprites/cloud.png" id="6_rmn2t"]
+[ext_resource type="AudioStream" uid="uid://owuq7e25fj2x" path="res://audio/water_drop.wav" id="7_rq1uo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3oxr"]
 radius = 125.0
@@ -28,3 +29,8 @@ texture = ExtResource("6_rmn2t")
 position = Vector2(-2, -5)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_b3oxr")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="MaxState" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_rq1uo")

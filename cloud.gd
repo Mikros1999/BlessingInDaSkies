@@ -20,6 +20,8 @@ var cross_inside := false
 @onready var rain_sprite := $RainSprite
 @onready var hit_area := $HitArea
 
+@onready var max_state_sound = $Audio/MaxState
+
 
 func _ready():
 	base_speed = randf_range(speed_min, speed_max)
@@ -74,9 +76,10 @@ func _advance_state():
 	_apply_state()
 	_recalculate_speed()
 
-	if state >= 3:
+	if state == 3:
 		raining = true
 		rain_sprite.visible = true
+		max_state_sound.play()
 
 
 func _recalculate_speed():

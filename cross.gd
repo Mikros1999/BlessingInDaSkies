@@ -3,6 +3,11 @@ extends RigidBody2D
 @export var move_speed := 400.0
 @export var deadzone := 0.15
 
+@onready var swoosh_sound = $Audio/Swoosh
+@onready var success_sound = $Audio/Success
+@onready var failure_sound = $Audio/Failure
+
+
 var priest_node: Node = null
 
 
@@ -35,6 +40,7 @@ func _physics_process(delta):
 
 
 func _set_casting():
+	swoosh_sound.play()
 	if priest_node:
 		priest_node.set_casting()
 
@@ -71,10 +77,18 @@ func _rotate_with_right_stick():
 
 
 func _try_cloud_interaction():
+	var interacted := false
+
 	for cloud in get_tree().get_nodes_in_group("cloud"):
 		if cloud.try_interact():
+			success_sound.play()
 			_reset_to_start()
+			interacted = true
 			break
+
+	if not interacted:
+		failure_sound.play()
+
 
 
 func _reset_to_start():
