@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://pnudye57dnlb"
+path="res://.godot/imported/toto real, creshendo.mp3-96f14371ae8e5bc547a39badd4e0dac2.mp3str"
+
+[deps]
+
+source_file="res://audio/toto real, creshendo.mp3"
+dest_files=["res://.godot/imported/toto real, creshendo.mp3-96f14371ae8e5bc547a39badd4e0dac2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

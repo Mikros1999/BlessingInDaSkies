@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cutypumwcieni"]
+
+[ext_resource type="FontFile" uid="uid://ddpjgx24oexy0" path="res://font/ARCADECLASSIC.TTF" id="1_0dmwv"]
+
+[resource]
+default_font = ExtResource("1_0dmwv")
+default_font_size = 40

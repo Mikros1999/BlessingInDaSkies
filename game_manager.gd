@@ -5,23 +5,45 @@ extends Node2D
 @export var threshold_state_2 := 6
 
 @onready var land_node = get_node(land)
-@onready var timer_label = $UI/TimerLabel
-@onready var result_label = $UI/ResultLabel
-@onready var reset_label = $UI/ResetLabel
+
+@onready var main_menu = $UI/MainMenu
+@onready var game_hud = $UI/GameHUD
+@onready var end_menu = $UI/EndMenu
+
+@onready var timer_label = $UI/GameHUD/TimerLabel
+@onready var result_label = $UI/EndMenu/ResultLabel
+
 @onready var cloud_spawner = $CloudSpawner
+
+@onready var intro_music = $Audio/IntroMusic
 @onready var game_music = $Audio/GameMusic
+@onready var end_music = $Audio/EndMusic
 
 
-const GAME_TIME := 10.0
+const GAME_TIME := 100.0
 var time_left := GAME_TIME
 var game_over := false
 
 
 func _ready():
+	_show_main_menu()
+
+func _show_main_menu():
+	main_menu.visible = true
+	game_hud.visible = false
+	end_menu.visible = false
+	game_over = true
+
+
+func _start_game():
+	main_menu.visible = false
+	game_hud.visible = true
+	end_menu.visible = false
+	game_over = false
+
+	# reset game state cleanly
+	time_left = GAME_TIME
 	result_label.visible = false
-	reset_label.visible = false
-	result_label.text = "Press X (gamepad) or R (keyboard) to Restart"
-	game_music.play()
 
 
 func _input(event):
@@ -79,19 +101,35 @@ func _freeze_cross():
 
 func _win_game():
 	game_over = true
-	_freeze_cross()
-	result_label.text = "!!! YOU BLESSED ENOUGH RAINS IN AFRICA !!!"
-	result_label.visible = true
-	reset_label.visible = true
-	set_process(false)
-	game_music.stop()
+	end_menu.visible = true
+	game_hud.visible = false
+	main_menu.visible = false
+	end_menu.get_node("ResultLabel").text = "THE LAND IS BLESSED"
 
 
 func _lose_game():
 	game_over = true
-	_freeze_cross()
-	result_label.text = "YOU LOSE - BLESS FASTER NEXT TIME"
-	result_label.visible = true
-	reset_label.visible = true
-	set_process(false)
-	game_music.stop()
+	end_menu.visible = true
+	game_hud.visible = false
+	main_menu.visible = false
+	end_menu.get_node("ResultLabel").text = "THE LAND REMAINS DRY"
+
+
+func _quit_game() -> void:
+	get_tree().quit()
+
+
+func _on_start_button_pressed() -> void:
+	_start_game()
+
+
+func _on_restart_button_pressed() -> void:
+	_restart_game()
+
+
+func _on_main_menu_button_pressed() -> void:
+	_show_main_menu()
+
+
+func _on_quit_button_pressed() -> void:
+	_quit_game()

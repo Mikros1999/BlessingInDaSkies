@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dggbdab14qbq3"]
+[gd_scene load_steps=8 format=3 uid="uid://dggbdab14qbq3"]
 
 [ext_resource type="Script" uid="uid://dnrgb4shm615u" path="res://cloud.gd" id="1_4rphk"]
-[ext_resource type="Texture2D" uid="uid://dt3peo3pngy3s" path="res://Sprites/cloud2.png" id="2_rmn2t"]
-[ext_resource type="Texture2D" uid="uid://ctva4aglufi4y" path="res://Sprites/cloud3.png" id="3_sytix"]
-[ext_resource type="Texture2D" uid="uid://b8orn1n3qkgcy" path="res://Sprites/cloud4.png" id="5_rmn2t"]
-[ext_resource type="Texture2D" uid="uid://bwfkqklgy3uoi" path="res://Sprites/cloud5.png" id="6_npi7w"]
+[ext_resource type="Texture2D" uid="uid://nrkpgx1y4e32" path="res://Sprites/cloud_transparent.png" id="2_rq1uo"]
+[ext_resource type="Texture2D" uid="uid://dsquv7rcon01n" path="res://Sprites/cloud1.png" id="3_rmn2t"]
+[ext_resource type="Texture2D" uid="uid://b0xclyeus0wws" path="res://Sprites/cloud1_storm(1).png" id="4_rmn2t"]
 [ext_resource type="Texture2D" uid="uid://csk2ipjtflmuu" path="res://Sprites/cloud.png" id="6_rmn2t"]
 [ext_resource type="AudioStream" uid="uid://owuq7e25fj2x" path="res://audio/water_drop.wav" id="7_rq1uo"]
 
@@ -16,7 +15,7 @@ height = 636.0
 z_index = -250
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_4rphk")
-sprites = Array[Texture2D]([ExtResource("2_rmn2t"), ExtResource("6_npi7w"), ExtResource("5_rmn2t"), ExtResource("3_sytix")])
+sprites = Array[Texture2D]([ExtResource("2_rq1uo"), ExtResource("3_rmn2t"), ExtResource("4_rmn2t")])
 
 [node name="CloudSprite" type="Sprite2D" parent="."]
 texture = ExtResource("6_rmn2t")

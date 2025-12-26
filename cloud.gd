@@ -1,11 +1,11 @@
 extends Node2D
 
-@export var speed_min := 60.0
-@export var speed_max := 140.0
+@export var speed_min := 50.0
+@export var speed_max := 150.0
 @export var sprites: Array[Texture2D]
 
-@export var speed_state_1_mult := 1.5
-@export var speed_state_2_mult := 2
+@export var speed_state_1_mult := 2
+@export var speed_state_2_mult := 3
 @export var speed_state_3_mult := 0.7   # slow when raining
 
 var base_speed: float

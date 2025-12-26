@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var imp_scene: PackedScene
-@export var spawn_interval := 10.0
-@export var max_imps := 2
+@export var spawn_interval := 2
+@export var max_imps := 5
 
 var timer := 0.0
 

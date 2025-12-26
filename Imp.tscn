@@ -37,6 +37,9 @@ radius = 50.32892
 
 [node name="Node2D" type="Node2D" groups=["imp"]]
 script = ExtResource("1_rhxii")
+speed_min = 100.0
+speed_max = 300.0
+steal_speed_multiplier = 2.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6eukx")
