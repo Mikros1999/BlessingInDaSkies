@@ -4,12 +4,16 @@ extends Node2D
 @export var speed_max := 140.0
 @export var sprites: Array[Texture2D]
 
+@export var speed_state_1_mult := 1.5
+@export var speed_state_2_mult := 2
+@export var speed_state_3_mult := 0.7   # slow when raining
+
+var base_speed: float
 var speed: float
 var direction: int
 var state := 0
 var raining := false
 var has_entered := false
-
 var cross_inside := false
 
 @onready var sprite := $CloudSprite
@@ -18,7 +22,8 @@ var cross_inside := false
 
 
 func _ready():
-	speed = randf_range(speed_min, speed_max)
+	base_speed = randf_range(speed_min, speed_max)
+	_recalculate_speed()
 	rain_sprite.visible = false
 	_apply_state()
 
@@ -52,23 +57,43 @@ func _on_body_exited(body):
 		cross_inside = false
 
 
+# 👉 returns TRUE only if interaction was successful
 func try_interact() -> bool:
-	if cross_inside:
-		_advance_state()
-		return true
-	return false
+	if not cross_inside:
+		return false
+
+	if state >= 3:
+		return false   # max state: ignore interaction
+
+	_advance_state()
+	return true
 
 
 func _advance_state():
-	if state < 3:
-		state += 1
-		_apply_state()
+	state += 1
+	_apply_state()
+	_recalculate_speed()
 
-	if state == 3 and not raining:
+	if state >= 3:
 		raining = true
 		rain_sprite.visible = true
 
 
+func _recalculate_speed():
+	match state:
+		0:
+			speed = base_speed
+		1:
+			speed = base_speed * speed_state_1_mult
+		2:
+			speed = base_speed * speed_state_2_mult
+		3:
+			speed = base_speed * speed_state_3_mult
+
+
 func _apply_state():
-	if sprites.size() > state:
-		sprite.texture = sprites[state]
+	if sprites.size() <= state:
+		push_warning("Cloud sprites array missing state %d" % state)
+		return
+
+	sprite.texture = sprites[state]

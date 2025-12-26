@@ -14,7 +14,8 @@ script = ExtResource("1_h2yge")
 
 [node name="Priest" type="Node2D" parent="."]
 z_index = 100
-position = Vector2(124, 418)
+position = Vector2(134, 468)
+scale = Vector2(1.1, 1.1)
 script = ExtResource("1_ig7tw")
 cross_scene = ExtResource("3_272bh")
 
@@ -24,7 +25,7 @@ scale = Vector2(1.1708152, 1.1480207)
 texture = ExtResource("4_272bh")
 
 [node name="HandMarker" type="Marker2D" parent="Priest"]
-position = Vector2(37, -72)
+position = Vector2(35.18181, -71.09091)
 
 [node name="CloudSpawner" type="Node2D" parent="."]
 script = ExtResource("2_0xm2m")
@@ -44,12 +45,12 @@ offset_bottom = 243.0
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1000
-position = Vector2(573.5, 319.00003)
-scale = Vector2(0.6015625, 0.5981481)
+position = Vector2(638.99994, 359.50003)
+scale = Vector2(0.66979164, 0.6731481)
 texture = ExtResource("7_5vw27")
 
 [node name="Land" type="Sprite2D" parent="."]
 z_index = -500
-position = Vector2(576, 549.00006)
-scale = Vector2(0.6036459, 0.5163934)
+position = Vector2(640.375, 608)
+scale = Vector2(0.6680989, 0.6338798)
 texture = ExtResource("8_5vw27")

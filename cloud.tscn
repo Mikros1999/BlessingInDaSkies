@@ -5,21 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://ctva4aglufi4y" path="res://Sprites/cloud3.png" id="3_sytix"]
 [ext_resource type="Texture2D" uid="uid://b8orn1n3qkgcy" path="res://Sprites/cloud4.png" id="5_rmn2t"]
 [ext_resource type="Texture2D" uid="uid://bwfkqklgy3uoi" path="res://Sprites/cloud5.png" id="6_npi7w"]
-[ext_resource type="Texture2D" uid="uid://coqv2d0sdpfta" path="res://Sprites/cloud6.png" id="6_rmn2t"]
+[ext_resource type="Texture2D" uid="uid://csk2ipjtflmuu" path="res://Sprites/cloud.png" id="6_rmn2t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3oxr"]
-radius = 19.0
-height = 76.0
+radius = 125.0
+height = 636.0
 
 [node name="Node2D" type="Node2D" groups=["cloud"]]
-position = Vector2(3, 7)
+z_index = -250
+scale = Vector2(0.25, 0.25)
 script = ExtResource("1_4rphk")
 sprites = Array[Texture2D]([ExtResource("2_rmn2t"), ExtResource("6_npi7w"), ExtResource("5_rmn2t"), ExtResource("3_sytix")])
 
 [node name="CloudSprite" type="Sprite2D" parent="."]
-z_index = -250
-position = Vector2(-1.9999924, -6)
-scale = Vector2(0.1138158, 0.14866665)
 texture = ExtResource("6_rmn2t")
 
 [node name="RainSprite" type="Sprite2D" parent="."]
