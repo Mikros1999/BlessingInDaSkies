@@ -7,9 +7,7 @@ extends RigidBody2D
 @onready var success_sound = $Audio/Success
 @onready var failure_sound = $Audio/Failure
 
-
 var priest_node: Node = null
-
 
 var start_pos: Vector2
 
