@@ -7,8 +7,10 @@ extends Node2D
 @onready var land_node = get_node(land)
 @onready var timer_label = $UI/TimerLabel
 @onready var result_label = $UI/ResultLabel
+@onready var cloud_spawner = $CloudSpawner
 
-const GAME_TIME := 100.0
+
+const GAME_TIME := 10.0
 var time_left := GAME_TIME
 var game_over := false
 
@@ -52,17 +54,23 @@ func _update_land_state(raining_count: int):
 		land_node.set_state(0)
 
 
+func _freeze_cross():
+	var crosses = get_tree().get_nodes_in_group("cross")
+	if crosses.size() > 0:
+		crosses[0].freeze()
+
+
 func _win_game():
 	game_over = true
+	_freeze_cross()
 	result_label.text = "!!! YOU BLESSED ENOUGH RAINS IN AFRICA !!!"
 	result_label.visible = true
-	print("YOU WIN")
 	set_process(false)
 
 
 func _lose_game():
 	game_over = true
+	_freeze_cross()
 	result_label.text = "YOU LOSE - BLESS FASTER NEXT TIME"
 	result_label.visible = true
-	print("YOU LOSE")
 	set_process(false)

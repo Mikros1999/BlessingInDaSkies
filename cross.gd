@@ -5,6 +5,8 @@ extends RigidBody2D
 
 var start_pos: Vector2
 
+var frozen := false
+
 
 func _ready():
 	start_pos = global_position
@@ -12,12 +14,20 @@ func _ready():
 
 
 func _physics_process(delta):
+	if frozen:
+		linear_velocity = Vector2.ZERO
+		return
+
 	_move_with_left_stick()
 	_rotate_with_right_stick()
 	_clamp_to_screen()
 
 	if Input.is_action_just_pressed("shoot"):
 		_try_cloud_interaction()
+		
+		
+func freeze():
+	frozen = true
 
 
 func _move_with_left_stick():
